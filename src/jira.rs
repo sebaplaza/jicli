@@ -18,7 +18,7 @@ impl Jira {
             password,
         }
     }
-    pub async fn call_api(&self, path: String, json_map: HashMap<&str, String>) -> (u16, String) {
+    async fn call_api(&self, path: String, json_map: HashMap<&str, String>) -> (u16, String) {
         let url = format!("{}{}", self.url_api, path);
         let user_pass = format!("{}:{}", self.user, self.password);
         let secret = encode(user_pass);
