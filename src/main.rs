@@ -13,6 +13,10 @@ struct Args {
     /// time (in the form: 1h, 1d, 30m, etc..)
     #[clap(short, long)]
     time: String,
+
+    /// comment (inside " ")
+    #[clap(short, long, default_value = "")]
+    comment: String,
 }
 
 #[tokio::main]
@@ -23,6 +27,8 @@ async fn main() -> Result<(), Box<dyn Error>> {
         env::var("JIRA_PASSWORD").expect("Please set $JIRA_PASSWORD environnement variable");
     let jira_url = env::var("JIRA_URL").expect("Please set $JIRA_URL environnement variable");
     let jira_instance = jira::Jira::new(jira_url, jira_user, jira_password);
-    jira_instance.add_work_load(args.issue, args.time).await;
+    jira_instance
+        .add_work_load(args.issue, args.time, args.comment)
+        .await;
     Ok(())
 }

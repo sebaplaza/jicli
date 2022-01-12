@@ -38,9 +38,14 @@ impl Jira {
             .expect("Problem extracting data from API call");
         return (status, data);
     }
-    pub async fn add_work_load(&self, issue: String, time: String) {
+    pub async fn add_work_load(&self, issue: String, time: String, comment: String) {
+        // Call Post api
+        // https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/#api-rest-api-3-issue-issueidorkey-worklog-post
         let mut json_map = HashMap::new();
         json_map.insert("timeSpent", time.clone());
+        if !comment.is_empty() {
+            json_map.insert("comment", comment.clone());
+        }
         let path = format!("/issue/{}/worklog", issue);
         let (status, data) = self.call_api(path, json_map).await;
         if status >= 400 {

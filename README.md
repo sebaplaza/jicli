@@ -33,6 +33,12 @@ ex: add 1 day into issue JIRA-362
 jicli --issue JIRA-362 --time 1d
 ```
 
+To know all possible options
+
+```shell
+jicli --help
+```
+
 ## Integrations
 
 For example, if your git brach includes the issue reference, you could write a shell function to deal with it automatically.
