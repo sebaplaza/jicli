@@ -4,6 +4,8 @@ Rust JIRA client
 
 This is a simple JIRA client to helps to add worklog times into an issue.
 
+[Crates](https://crates.io/crates/jicli)
+
 ## Requirements
 
 You must a have rust tools ([rustup](https://rustup.rs/)) installed
