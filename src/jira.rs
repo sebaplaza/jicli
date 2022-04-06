@@ -8,7 +8,6 @@ pub struct Jira {
     user: String,
     password: String,
 }
-
 impl Jira {
     pub fn new(url: String, user: String, password: String) -> Jira {
         Jira {
@@ -38,7 +37,13 @@ impl Jira {
             .expect("Problem extracting data from API call");
         return (status, data);
     }
-    pub async fn add_work_load(&self, issue: String, time: String, comment: String) {
+    pub async fn add_work_load(
+        &self,
+        issue: String,
+        time: String,
+        comment: String,
+        started: String,
+    ) {
         // Call Post api
         // https://developer.atlassian.com/cloud/jira/platform/rest/v3/api-group-issue-worklogs/#api-rest-api-3-issue-issueidorkey-worklog-post
         let mut json_map = HashMap::new();
@@ -46,6 +51,10 @@ impl Jira {
         if !comment.is_empty() {
             json_map.insert("comment", comment.clone());
         }
+        if !started.is_empty() {
+            json_map.insert("started", started.clone());
+        }
+
         let path = format!("/issue/{}/worklog", issue);
         let (status, data) = self.call_api(path, json_map).await;
         if status >= 400 {

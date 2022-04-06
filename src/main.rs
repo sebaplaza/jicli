@@ -17,6 +17,10 @@ struct Args {
     /// comment (inside " ")
     #[clap(short, long, default_value = "")]
     comment: String,
+
+    /// started (ex: 2021-01-17T12:34:00.000+0000)
+    #[clap(short, long, default_value = "")]
+    started: String,
 }
 
 #[tokio::main]
@@ -28,7 +32,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let jira_url = env::var("JIRA_URL").expect("Please set $JIRA_URL environnement variable");
     let jira_instance = jira::Jira::new(jira_url, jira_user, jira_password);
     jira_instance
-        .add_work_load(args.issue, args.time, args.comment)
+        .add_work_load(args.issue, args.time, args.comment, args.started)
         .await;
     Ok(())
 }
